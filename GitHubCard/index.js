@@ -16,8 +16,22 @@ axios.get("https://api.github.com/users/jhoyt200931")
   })
   .catch((errorResponse) => {
     console.log(errorResponse);
+  })
+  .then(() => {  
+    followersArray.forEach(name => {
+      let object = null;
+    axios.get(`https://api.github.com/users/${name}`)
+    .then((successResponse) => {
+      console.log(successResponse);
+      object = successResponse;
+      const cardGroup = document.querySelector(".cards");
+      cardGroup.appendChild(cardMaker(object));
+      })
+      .catch((errorResponse) => {
+        console.log(errorResponse);
+      });
+  })
   });
-
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -44,19 +58,6 @@ axios.get("https://api.github.com/users/jhoyt200931")
 
 const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"];
 
-followersArray.forEach(name => {
-  let object = null;
-axios.get(`https://api.github.com/users/${name}`)
-.then((successResponse) => {
-  console.log(successResponse);
-  object = successResponse;
-  const cardGroup = document.querySelector(".cards");
-  cardGroup.appendChild(cardMaker(object));
-  })
-  .catch((errorResponse) => {
-    console.log(errorResponse);
-  });
-})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
