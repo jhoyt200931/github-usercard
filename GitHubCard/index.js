@@ -6,14 +6,17 @@ import axios from 'axios';
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+let object = null;
 axios.get("https://api.github.com/users/jhoyt200931")
-  .then((successResponse) => {
-    console.log(successResponse);
+.then((successResponse) => {
+  console.log(successResponse);
+  object = successResponse;
+  const cardGroup = document.querySelector(".cards");
+  cardGroup.appendChild(cardMaker(object));
   })
   .catch((errorResponse) => {
     console.log(errorResponse);
-  })
+  });
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -39,7 +42,21 @@ axios.get("https://api.github.com/users/jhoyt200931")
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"];
+
+followersArray.forEach(name => {
+  let object = null;
+axios.get(`https://api.github.com/users/${name}`)
+.then((successResponse) => {
+  console.log(successResponse);
+  object = successResponse;
+  const cardGroup = document.querySelector(".cards");
+  cardGroup.appendChild(cardMaker(object));
+  })
+  .catch((errorResponse) => {
+    console.log(errorResponse);
+  });
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -83,8 +100,29 @@ const cardMaker = (obj) => {
   // add content
   userImg.src = obj.data.avatar_url;
   name.textContent = obj.data.name;
-  
+  username.textContent = obj.data.login;
+  location.textContent = `Location: ${obj.data.location}`;
+  profile.textContent = `Profile: ${link}`;
+  link.href = obj.data.html_url;
+  link.textContent = obj.data.html_url;
+  followers.textContent = `Followers: ${obj.data.followers}`;
+  following.textContent = `Following: ${obj.data.following}`;
+  bio.textContent = obj.data.bio;
+
+  //HTML structure
+  card.appendChild(userImg);
+  card.appendChild(info);
+  info.appendChild(name);
+  info.appendChild(username);
+  info.appendChild(location);
+  info.appendChild(profile);
+  info.appendChild(followers);
+  info.appendChild(following);
+  info.appendChild(bio);
+  profile.appendChild(link);
+  return card;
 }
+
 
 /*
   List of LS Instructors Github username's:
