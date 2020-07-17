@@ -91,6 +91,7 @@ const cardMaker = (obj) => {
   const followers = document.createElement("p");
   const following = document.createElement("p");
   const bio = document.createElement("p");
+  // const button = document.createElement("span");
 
   // add classes
   card.classList.add("card");
